@@ -1,4 +1,18 @@
+import { useContext } from "react";
+import { AuthContext } from "../ProviderContext/ProviderContext";
+
 const Home = () => {
+  const {loader}=useContext(AuthContext)
+  if (loader) {
+    return (
+      <div className="max-w-3xl mx-auto text-center border rounded shadow-lg">
+        <span className="loading loading-bars loading-xs"></span>
+        <span className="loading loading-bars loading-sm"></span>
+        <span className="loading loading-bars loading-md"></span>
+        <span className="loading loading-bars loading-lg"></span>
+      </div>
+    );
+  }
     return (
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">

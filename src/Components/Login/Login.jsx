@@ -1,10 +1,34 @@
+import { useContext } from "react";
+import { AuthContext } from "../ProviderContext/ProviderContext";
+import { Link, useNavigate } from "react-router-dom";
+
 const Login = () => {
+  const {SignIn,loader}=useContext(AuthContext);
+  const navigate=useNavigate();
+  if (loader) {
+    return (
+      <div className="max-w-3xl mx-auto text-center border rounded shadow-lg">
+        <span className="loading loading-bars loading-xs"></span>
+        <span className="loading loading-bars loading-sm"></span>
+        <span className="loading loading-bars loading-md"></span>
+        <span className="loading loading-bars loading-lg"></span>
+      </div>
+    );
+  }
   const handleLogin = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password, name);
+    //sign in or login
+    SignIn(email,password)
+    .then(res=>{
+      console.log(res.user)
+      e.target.reset();
+      navigate('/')
+    })
+    .catch(error=>console.log(error.message))
   };
     return (
       <div className="max-w-5xl mx-auto">
@@ -59,6 +83,9 @@ const Login = () => {
                 <div className="form-control mt-6">
                   <button className="btn btn-primary">Login</button>
                 </div>
+                <p>
+                  Not Registered yet ? please <button className="link btn btn-square"><Link to={'/register'}>Register</Link></button>
+                </p>
               </form>
             </div>
           </div>
